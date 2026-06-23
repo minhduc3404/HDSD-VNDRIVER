@@ -26,7 +26,11 @@ extra:
   generator: false
 
 extra_css:
+  # Style cơ bản (mặc định)
   - assets/stylesheets/extra.css
+  # REFINED STYLE (Optional): Bỏ comment dòng dưới để apply style card-based tinh tế hơn.
+  # Gỡ bỏ: comment lại dòng này và reload.
+  - assets/stylesheets/extra-ref.css
 
 markdown_extensions:
   - admonition

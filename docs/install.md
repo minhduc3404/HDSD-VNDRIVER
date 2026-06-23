@@ -7,28 +7,28 @@ Hướng dẫn tải và cài đặt App VNDriver trên điện thoại.
 -   Điện thoại thông minh (Smartphone)
 -   Kết nối Internet (Wi-Fi hoặc 3G/4G/5G)
 
-/// tab | Android
-1. Mở **CH Play** (Google Play Store) trên điện thoại.
-2. Tìm kiếm **"vndriver"**.
+=== "Android"
 
-    ![Tìm kiếm app VNDriver trên Google Play](assets/screenshots/image21.jpg){: loading=lazy }
+    1. Mở **CH Play** (Google Play Store) trên điện thoại.
+    2. Tìm kiếm **"vndriver"**.
 
-3. Chọn ứng dụng **VNDriver**, sau đó chọn **Cài đặt**.
+        ![Tìm kiếm app VNDriver trên Google Play](assets/screenshots/image21.jpg){: loading=lazy }
 
-    ![Quá trình cài đặt App VNDriver](assets/screenshots/image4.png){: loading=lazy }
+    3. Chọn ứng dụng **VNDriver**, sau đó chọn **Cài đặt**.
 
-4. Đợi quá trình tải và cài đặt hoàn tất.
-5. Chọn **Mở** để khởi động App.
-///
+        ![Quá trình cài đặt App VNDriver](assets/screenshots/image4.png){: loading=lazy }
 
-/// tab | iOS
-1. Mở **App Store** trên iPhone.
-2. Tìm kiếm **"vndriver"**.
-3. Chọn **Nhận** (Get).
-4. Xác nhận bằng Face ID / Touch ID / mật khẩu Apple ID.
-5. Đợi quá trình tải và cài đặt hoàn tất.
-6. Chọn **Mở** để khởi động App.
-///
+    4. Đợi quá trình tải và cài đặt hoàn tất.
+    5. Chọn **Mở** để khởi động App.
+
+=== "iOS"
+
+    1. Mở **App Store** trên iPhone.
+    2. Tìm kiếm **"vndriver"**.
+    3. Chọn **Nhận** (Get).
+    4. Xác nhận bằng Face ID / Touch ID / mật khẩu Apple ID.
+    5. Đợi quá trình tải và cài đặt hoàn tất.
+    6. Chọn **Mở** để khởi động App.
 
 ## Cấp quyền ứng dụng (lần đầu mở App)
 

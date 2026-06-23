@@ -1,0 +1,394 @@
+/* ═══════════════════════════════════════════════════════════════
+   extra-ref.css — Optional Refined Style for HDSD VNDriver (MkDocs Material)
+   
+   CÁCH DÙNG:
+     Apply:  Bỏ comment dòng " - assets/stylesheets/extra-ref.css" trong mkdocs.yml
+     Gỡ bỏ:  Comment lại dòng đó trong mkdocs.yml → reload
+   
+   ⚠ Chỉ thay đổi style (màu sắc, font, border, shadow, spacing).
+   ⚠ Không thay đổi bố cục layout, cấu trúc HTML, hay số thứ tự step.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ───── Design Tokens ───── */
+:root {
+  --ref-bg: #F7F8FA;
+  --ref-surface: #FFFFFF;
+  --ref-surface-soft: #F1F5F3;
+  --ref-ink: #182230;
+  --ref-muted: #667085;
+  --ref-subtle: #98A2B3;
+  --ref-line: #E4E7EC;
+  --ref-primary: #19994A;
+  --ref-primary-strong: #117A39;
+  --ref-primary-soft: #E8F7EE;
+  --ref-blue: #2563EB;
+  --ref-blue-soft: #EFF6FF;
+  --ref-orange: #F97316;
+  --ref-orange-soft: #FFF7ED;
+  --ref-red: #EF4444;
+  --ref-red-soft: #FEF2F2;
+  --ref-radius-sm: 8px;
+  --ref-radius-md: 12px;
+  --ref-radius-xl: 22px;
+  --ref-shadow-soft: 0 1px 2px rgba(16, 24, 40, 0.05);
+  --ref-shadow-md: 0 2px 4px rgba(16, 24, 40, 0.08);
+  --ref-font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+
+/* ───── 1. Nền chung ───── */
+body { background: var(--ref-bg) !important; }
+.md-main { background: var(--ref-bg); }
+
+
+/* ───── 2. Header (glassmorphism) ───── */
+.md-header {
+  background: var(--ref-primary) !important;
+  border-bottom: none !important;
+}
+.md-header[data-md-state="shadow"] {
+  box-shadow: none !important;
+  border-bottom: none !important;
+}
+.md-header__button.md-logo {
+  background: #fff !important;
+  border-radius: 15px !important;
+  padding: 4px 10px !important;
+}
+.md-header__button.md-logo img { filter: none !important; }
+.md-header__button.md-icon {
+  color: #fff !important;
+}
+.md-header__button.md-icon:hover {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+.md-search__input {
+  background-color: rgba(255, 255, 255, 0.16) !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  caret-color: #fff !important;
+}
+.md-search__input::placeholder {
+  color: rgba(255, 255, 255, 0.78) !important;
+  opacity: 1;
+}
+.md-search__form {
+  background: rgba(255, 255, 255, 0.16) !important;
+  border-radius: 10px !important;
+}
+.md-search__icon,
+.md-search__options .md-search__icon {
+  color: rgba(255, 255, 255, 0.86) !important;
+}
+.md-search__icon:hover,
+.md-search__options .md-search__icon:hover {
+  color: #fff !important;
+}
+.md-search__suggest {
+  color: var(--ref-subtle) !important;
+}
+.md-header__topic { font-weight: 750; font-size: 0.95rem; color: #fff !important; }
+
+/* Top navigation tabs */
+.md-tabs {
+  background: var(--ref-primary) !important;
+  color: #fff !important;
+  border-top: none !important;
+  box-shadow: none !important;
+}
+.md-tabs__link {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  color: #fff !important;
+}
+.md-tabs__item--active .md-tabs__link {
+  color: #fff !important;
+  font-weight: 700;
+}
+
+.md-typeset .tabbed-content {
+  padding-inline: 5px !important;
+}
+
+
+/* ───── 3. Sidebar / TOC ───── */
+.md-sidebar { font-family: var(--ref-font); }
+.md-sidebar--primary .md-sidebar__scrollwrap,
+.md-sidebar--secondary .md-sidebar__scrollwrap {
+}
+.md-sidebar .md-nav__title {
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 0.75rem; font-weight: 900;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--ref-ink); padding: 6px 10px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.md-sidebar .md-nav__title .md-nav__icon {
+  flex: 0 0 auto;
+  margin: 0;
+}
+.md-nav--primary .md-nav__title {
+  background: transparent !important; box-shadow: none !important;
+}
+.md-nav__link {
+  font-family: var(--ref-font); border-radius: 10px;
+  padding: 8px 10px !important; font-size: 0.875rem;
+  color: var(--ref-muted) !important;
+  transition: background 0.15s, color 0.15s;
+}
+.md-nav__link:hover { background: var(--ref-surface-soft) !important; color: var(--ref-ink) !important; }
+.md-nav__link--active { color: var(--ref-primary) !important; font-weight: 650; }
+.md-nav--secondary .md-nav__link { font-size: 0.8125rem; }
+
+/* Sidebar mobile: horizontal scroll */
+@media (max-width: 860px) {
+  .md-sidebar--primary .md-sidebar__scrollwrap { padding: 4px; }
+}
+
+
+/* ───── 4. Typography ───── */
+.md-typeset {
+  font-family: var(--ref-font);
+  color: var(--ref-ink);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  font-size: 0.875rem;
+}
+.md-typeset h1 {
+  font-size: clamp(1.875rem, 4vw, 2.75rem);
+  font-weight: 800; line-height: 1.04; letter-spacing: -0.04em;
+  color: var(--ref-ink); margin-bottom: 0.5rem;
+}
+.md-typeset h2 {
+  font-size: 1.375rem; font-weight: 750;
+  line-height: 1.2; letter-spacing: -0.02em;
+  color: var(--ref-ink);
+  margin: 18px 0 12px;
+  padding-bottom: 4px;
+}
+.md-typeset h3 {
+  font-size: 1.1rem; font-weight: 700;
+  color: var(--ref-ink); margin: 18px 0 8px;
+}
+/* Desc text under h1/h2 */
+.md-typeset h1 + p, .md-typeset h2 + p {
+  color: var(--ref-muted); font-size: 0.9375rem; margin-top: -6px;
+}
+
+/* ───── 6. Ordered Lists → Steps ───── */
+.md-typeset ol {
+  counter-reset: step-counter;
+  list-style: none;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+  display: grid;
+  gap: 6px;
+}
+.md-typeset ol > li {
+  counter-increment: step-counter;
+  position: relative;
+  display: block;
+  padding: 0 0 0 38px !important;
+  min-height: 28px;
+  margin-left: 0 !important;
+  margin-inline-start: 0 !important;
+}
+.md-typeset ol > li::before {
+  content: counter(step-counter);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--ref-primary);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 850;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+.md-typeset ol > li p {
+  margin: 0;
+  color: var(--ref-muted);
+  font-size: 0.9375rem;
+}
+/* Keep bold text inline inside step content */
+.md-typeset ol > li > p:first-child strong {
+  display: inline;
+  font-size: inherit;
+  color: var(--ref-ink);
+  margin-bottom: 0;
+}
+
+/* ───── 7. Images ───── */
+.md-typeset img {
+  border: 1px solid var(--ref-line);
+  border-radius: var(--ref-radius-md);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: var(--ref-shadow-soft);
+}
+.md-typeset img[align] {
+  border-radius: 0;
+}
+
+/* ───── 8. Admonitions ───── */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--ref-radius-md) !important;
+  border-width: 1px !important;
+  box-shadow: none !important;
+  padding: 12px 14px !important;
+  margin: 12px 0;
+}
+/* Warning */
+.md-typeset .admonition.warning, .md-typeset details.warning {
+  background: var(--ref-orange-soft) !important;
+  border-color: #FED7AA !important; color: #9A3412;
+}
+.md-typeset .warning > .admonition-title, .md-typeset details.warning > summary {
+  background: var(--ref-orange-soft) !important;
+  border-bottom: none !important;
+}
+.md-typeset .warning > .admonition-title::before,
+.md-typeset details.warning > summary::before { background-color: var(--ref-orange) !important; }
+
+/* Note / Info */
+.md-typeset .admonition.note, .md-typeset details.note,
+.md-typeset .admonition.info, .md-typeset details.info {
+  background: var(--ref-blue-soft) !important;
+  border-color: #BFDBFE !important; color: #1E40AF;
+}
+.md-typeset .note > .admonition-title, .md-typeset details.note > summary,
+.md-typeset .info > .admonition-title, .md-typeset details.info > summary {
+  background: var(--ref-blue-soft) !important; border-bottom: none !important;
+}
+.md-typeset .note > .admonition-title::before, .md-typeset details.note > summary::before,
+.md-typeset .info > .admonition-title::before, .md-typeset details.info > summary::before {
+  background-color: var(--ref-blue) !important;
+}
+
+/* Success / Tip */
+.md-typeset .admonition.success, .md-typeset details.success,
+.md-typeset .admonition.tip, .md-typeset details.tip {
+  background: var(--ref-primary-soft) !important;
+  border-color: #C9EBD5 !important; color: var(--ref-primary-strong);
+}
+.md-typeset .success > .admonition-title, .md-typeset details.success > summary,
+.md-typeset .tip > .admonition-title, .md-typeset details.tip > summary {
+  background: var(--ref-primary-soft) !important; border-bottom: none !important;
+}
+.md-typeset .success > .admonition-title::before, .md-typeset details.success > summary::before,
+.md-typeset .tip > .admonition-title::before, .md-typeset details.tip > summary::before {
+  background-color: var(--ref-primary) !important;
+}
+
+/* ───── 9. Tables ───── */
+.md-typeset table:not(.md-nav__list) {
+  border: 1px solid var(--ref-line);
+  border-radius: var(--ref-radius-sm);
+  overflow: hidden;
+  box-shadow: var(--ref-shadow-soft);
+}
+.md-typeset table th {
+  background: var(--ref-primary-soft);
+  color: var(--ref-primary-strong);
+  font-weight: 750;
+  font-size: 0.8125rem;
+}
+
+
+/* ───── 11. Code ───── */
+.md-typeset code {
+  background: var(--ref-surface-soft);
+  color: var(--ref-ink);
+  border: 1px solid var(--ref-line);
+  border-radius: 6px;
+  padding: 2px 6px;
+  font-size: 0.85em;
+}
+.md-typeset pre code {
+  background: #1E1E2E;
+  color: #CDD6F4;
+  border: none;
+  border-radius: var(--ref-radius-md);
+}
+
+
+/* ───── 12. Footer ───── */
+.md-footer-meta { background-color: #43914F; }
+.md-footer-meta .md-copyright {
+  text-align: center; width: 100%; margin: 0 auto;
+}
+
+/* Navigation / CTA buttons: keep visible on white backgrounds */
+.md-typeset .md-button,
+.md-content__button,
+.md-top {
+  background: var(--ref-primary) !important;
+  border-color: var(--ref-primary) !important;
+  color: #fff !important;
+}
+.md-typeset .md-button:hover,
+.md-content__button:hover,
+.md-top:hover {
+  background: var(--ref-primary-strong) !important;
+  border-color: var(--ref-primary-strong) !important;
+  color: #fff !important;
+}
+.md-typeset .md-button--secondary {
+  background: #fff !important;
+  border-color: var(--ref-primary) !important;
+  color: var(--ref-primary-strong) !important;
+}
+
+/* ───── 13. Misc ───── */
+.md-typeset hr {
+  border: none; height: 1px;
+  background: var(--ref-line); margin: 24px 0;
+}
+.md-typeset .tabbed-set {
+  border: 1px solid var(--ref-line);
+  border-radius: var(--ref-radius-md);
+  overflow: hidden;
+  background: var(--ref-surface);
+}
+
+/* Bullet lists */
+.md-typeset ul li {
+  color: var(--ref-muted);
+}
+.md-typeset ul li strong {
+  color: var(--ref-ink);
+}
+
+/* Regular paragraphs outside ol/admonitions */
+.md-typeset p {
+  color: var(--ref-muted);
+}
+
+
+/* ───── Responsive ───── */
+@media (max-width: 860px) {
+  .md-typeset h2 { font-size: 1.2rem; }
+  .md-typeset h1 { font-size: 1.625rem; }
+  .md-typeset ol > li::before {
+    width: 24px; height: 24px; font-size: 0.7rem;
+  }
+  .md-typeset ol > li {
+    padding-left: 34px !important;
+    min-height: 24px;
+  }
+  .md-typeset ol > li > p:first-child strong {
+    font-size: inherit;
+  }
+}
