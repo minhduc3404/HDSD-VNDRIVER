@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+<title>HDSD App VNDriver - Tài xế</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #F9FAFB;
+    color: #1F2937;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: #1A2B4A;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .back { color: #94A3B8; font-size: 24px; text-decoration: none; }
+  .topbar .title { color: #fff; font-size: 15px; font-weight: 700; }
+  .hero {
+    background: #fff;
+    padding: 22px 16px 16px;
+    border-bottom: 3px solid #2563EB;
+  }
+  .hero h1 { font-size: 24px; font-weight: 850; color: #1A2B4A; line-height: 1.2; margin-bottom: 8px; }
+  .meta { font-size: 13px; color: #6B7280; }
+  .toc {
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #E5E7EB;
+  }
+  .toc-title { font-size: 12px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .toc a {
+    display: block; padding: 9px 0;
+    color: #1A2B4A; text-decoration: none; font-weight: 650; font-size: 14px;
+    border-top: 1px solid #F3F4F6;
+  }
+  section { background: #fff; margin-top: 10px; border-top: 1px solid #E5E7EB; border-bottom: 1px solid #E5E7EB; }
+  .section-head { padding: 16px; border-bottom: 1px solid #F3F4F6; }
+  .section-head h2 { font-size: 20px; color: #1A2B4A; margin-bottom: 4px; }
+  .section-head p { font-size: 14px; color: #6B7280; }
+  .step { padding: 16px; border-bottom: 1px solid #F3F4F6; }
+  .step:last-child { border-bottom: none; }
+  .step-head { display: flex; gap: 10px; align-items: flex-start; }
+  .step-num {
+    flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+    background: #1A2B4A; color: #fff; font-size: 14px; font-weight: 850;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .step-text { font-size: 15px; font-weight: 750; color: #111827; padding-top: 3px; }
+  .body { margin: 10px 0 0 38px; font-size: 14px; color: #374151; }
+  ul { margin-left: 18px; }
+  li { margin: 5px 0; }
+  code {
+    background: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 6px;
+    padding: 2px 6px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  }
+  .warn, .success, .info {
+    margin: 10px 0 0 38px; border-radius: 10px; padding: 10px 12px;
+    display: flex; gap: 8px; align-items: flex-start; font-size: 13px; font-weight: 650;
+  }
+  .warn { background: #FEF3C7; color: #92400E; }
+  .success { background: #D1FAE5; color: #166534; }
+  .info { background: #DBEAFE; color: #1E40AF; }
+  .screenshot {
+    margin: 10px 0 0 38px; border: 1px dashed #CBD5E1; border-radius: 10px;
+    background: #F8FAFC; overflow: hidden;
+  }
+  .placeholder { padding: 26px 12px; text-align: center; color: #64748B; font-size: 13px; }
+  .caption { padding: 7px 10px; font-size: 11px; color: #6B7280; text-align: center; background: #F3F4F6; border-top: 1px solid #E5E7EB; }
+  .faq { padding: 0 16px 16px; }
+  .faq-item { padding: 14px 0; border-bottom: 1px solid #F3F4F6; }
+  .faq-item:last-child { border-bottom: none; }
+  .faq-item h3 { font-size: 15px; color: #111827; margin-bottom: 6px; }
+  .faq-item p, .faq-item li { font-size: 14px; color: #374151; }
+  .related { padding: 16px; }
+  .related-label { font-size: 11px; font-weight: 800; color: #9CA3AF; text-transform: uppercase; letter-spacing: .05em; margin-bottom: 8px; }
+  .related a {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 14px; margin-bottom: 7px; background: #fff;
+    border: 1px solid #E5E7EB; border-radius: 10px; text-decoration: none;
+    font-size: 14px; color: #1A2B4A; font-weight: 650;
+  }
+  .footer { text-align: center; color: #9CA3AF; font-size: 12px; padding: 20px 16px 28px; }
+  @media (min-width: 760px) {
+    body { max-width: 760px; margin: 0 auto; border-left: 1px solid #E5E7EB; border-right: 1px solid #E5E7EB; }
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <a href="#" class="back">‹</a>
+    <span class="title">Trợ giúp VNDriver</span>
+  </div>
+
+  <div class="hero">
+    <h1>Hướng dẫn sử dụng App VNDriver cho tài xế</h1>
+    <div class="meta">⏱ 5 phút · Android & iPhone · ALI 2026</div>
+  </div>
+
+  <nav class="toc">
+    <div class="toc-title">Nội dung</div>
+    <a href="#install">1. Cài đặt App VNDriver</a>
+    <a href="#permission">2. Cấp quyền ứng dụng</a>
+    <a href="#login">3. Đăng nhập & đăng xuất</a>
+    <a href="#trip">4. Đón khách / nhận chuyến</a>
+    <a href="#troubleshoot">5. Xử lý lỗi thường gặp</a>
+  </nav>
+
+  <section id="install">
+    <div class="section-head">
+      <h2>1. Cài đặt App VNDriver</h2>
+      <p>Tài xế tải ứng dụng VNDriver từ CH Play hoặc App Store để đăng nhập và nhận chuyến.</p>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">1</div><div class="step-text">Mở cửa hàng ứng dụng</div></div>
+      <div class="body">
+        Android mở <b>CH Play</b>, iPhone mở <b>App Store</b>, sau đó tìm kiếm <code>vndriver</code>.
+      </div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Tìm kiếm “vndriver” trên CH Play/App Store</div><div class="caption">Hình ảnh tìm kiếm App VNDriver</div></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">2</div><div class="step-text">Chọn ứng dụng VNDriver và bấm Cài đặt</div></div>
+      <div class="body">Đợi ứng dụng tải về điện thoại. Sau khi hoàn tất, nút <b>Mở</b> sẽ hiển thị.</div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Nút Cài đặt → Quá trình tải → Nút Mở</div><div class="caption">Quá trình cài đặt App VNDriver</div></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">3</div><div class="step-text">Mở ứng dụng</div></div>
+      <div class="body">Bấm <b>Mở</b> hoặc mở biểu tượng VNDriver trên màn hình điện thoại.</div>
+      <div class="success"><span>✅</span><span>Sau khi mở lần đầu, tài xế cần cấp đủ quyền để App hoạt động ổn định.</span></div>
+    </div>
+  </section>
+
+  <section id="permission">
+    <div class="section-head">
+      <h2>2. Cấp quyền ứng dụng</h2>
+      <p>VNDriver cần quyền vị trí và chạy nền để xác định vị trí xe, nhận cuốc và cập nhật trạng thái.</p>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">1</div><div class="step-text">Cho phép truy cập vị trí</div></div>
+      <div class="body">
+        Khi App hỏi quyền vị trí, chọn <b>Luôn cho phép</b> hoặc <b>Allow all the time</b>.
+      </div>
+      <div class="warn"><span>⚠️</span><span>Không chọn “Chỉ cho phép khi dùng App” nếu công ty yêu cầu App chạy nền để nhận chuyến.</span></div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Popup cấp quyền vị trí</div><div class="caption">Cấp quyền vị trí cho VNDriver</div></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">2</div><div class="step-text">Cho phép App chạy nền</div></div>
+      <div class="body">
+        Vào cài đặt ứng dụng VNDriver trên điện thoại và kiểm tra:
+        <ul>
+          <li>Không giới hạn pin / tắt tối ưu pin</li>
+          <li>Cho phép dữ liệu nền</li>
+          <li>Tắt “Tạm dừng hoạt động nếu không dùng”</li>
+        </ul>
+      </div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Cài đặt pin, dữ liệu nền, chạy nền</div><div class="caption">Kiểm tra quyền chạy nền</div></div>
+    </div>
+  </section>
+
+  <section id="login">
+    <div class="section-head">
+      <h2>3. Đăng nhập & đăng xuất</h2>
+      <p>Tài xế sử dụng tài khoản được công ty cấp để đăng nhập vào App.</p>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">1</div><div class="step-text">Đăng nhập</div></div>
+      <div class="body">
+        Mở VNDriver, nhập <b>tài khoản</b> và <b>mật khẩu</b>, sau đó bấm <b>Đăng nhập</b>.
+      </div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Màn hình đăng nhập VNDriver</div><div class="caption">Màn hình đăng nhập</div></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">2</div><div class="step-text">Kiểm tra màn hình sẵn sàng đón khách</div></div>
+      <div class="body">Sau khi đăng nhập thành công, App chuyển đến màn hình <b>Sẵn sàng đón khách</b>.</div>
+      <div class="info"><span>ℹ️</span><span>Nếu không thấy trạng thái hoạt động, kiểm tra lại Internet, GPS và quyền vị trí.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">3</div><div class="step-text">Đăng xuất</div></div>
+      <div class="body">
+        Tại màn hình chính, bấm biểu tượng <b>☰ Menu</b> ở góc trái, chọn <b>Đăng xuất</b> và xác nhận.
+      </div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Menu → Đăng xuất → Xác nhận</div><div class="caption">Thao tác đăng xuất khỏi App</div></div>
+    </div>
+  </section>
+
+  <section id="trip">
+    <div class="section-head">
+      <h2>4. Đón khách / nhận chuyến</h2>
+      <p>Các thao tác cơ bản khi tài xế bắt đầu phục vụ khách.</p>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">1</div><div class="step-text">Đón khách vẫy</div></div>
+      <div class="body">
+        Tại màn hình chính, bấm <b>Khách vẫy</b>, kiểm tra thông tin chuyến và bấm <b>Xác nhận</b> để bắt đầu chuyến.
+      </div>
+      <div class="screenshot"><div class="placeholder">Chèn ảnh: Nút Khách vẫy và màn hình xác nhận</div><div class="caption">Tạo chuyến khách vẫy</div></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">2</div><div class="step-text">Nhận chuyến từ hệ thống</div></div>
+      <div class="body">
+        Khi có chuyến được điều phối, kiểm tra thông tin điểm đón, điểm trả và bấm <b>Nhận chuyến</b> nếu sẵn sàng phục vụ.
+      </div>
+      <div class="warn"><span>⚠️</span><span>Luôn kiểm tra đúng thông tin khách và điểm đón trước khi bắt đầu di chuyển.</span></div>
+    </div>
+    <div class="step">
+      <div class="step-head"><div class="step-num">3</div><div class="step-text">Kết thúc chuyến</div></div>
+      <div class="body">
+        Sau khi đưa khách đến điểm trả, kiểm tra giá cước và bấm <b>Kết thúc chuyến</b> theo quy trình của công ty.
+      </div>
+    </div>
+  </section>
+
+  <section id="troubleshoot">
+    <div class="section-head">
+      <h2>5. Xử lý lỗi thường gặp</h2>
+      <p>Các tình huống tài xế thường gặp khi sử dụng App VNDriver.</p>
+    </div>
+    <div class="faq">
+      <div class="faq-item">
+        <h3>App báo “Đăng nhập ở thiết bị khác”</h3>
+        <p>Nguyên nhân thường do tài khoản đang đăng nhập trên điện thoại khác hoặc lần trước chưa đăng xuất đúng cách.</p>
+        <ul>
+          <li>Đăng xuất trên thiết bị cũ nếu còn sử dụng được.</li>
+          <li>Mở lại VNDriver và đăng nhập lại.</li>
+          <li>Nếu vẫn lỗi, liên hệ điều hành hoặc bộ phận hỗ trợ.</li>
+        </ul>
+      </div>
+      <div class="faq-item">
+        <h3>Không nhận được cuốc xe</h3>
+        <ul>
+          <li>Kiểm tra App đang ở trạng thái online/sẵn sàng.</li>
+          <li>Kiểm tra GPS đã bật.</li>
+          <li>Kiểm tra quyền vị trí là “Luôn cho phép”.</li>
+          <li>Kiểm tra Internet và pin điện thoại.</li>
+        </ul>
+      </div>
+      <div class="faq-item">
+        <h3>App không hiển thị vị trí hoặc mất GPS</h3>
+        <ul>
+          <li>Bật GPS/vị trí trên điện thoại.</li>
+          <li>Tắt tiết kiệm pin hoặc tối ưu pin cho VNDriver.</li>
+          <li>Khởi động lại App.</li>
+          <li>Nếu vẫn lỗi, khởi động lại điện thoại.</li>
+        </ul>
+      </div>
+      <div class="faq-item">
+        <h3>Cần gửi yêu cầu hỗ trợ</h3>
+        <p>Khi báo lỗi, tài xế nên cung cấp: số điện thoại tài xế, mã chuyến, thời gian phát sinh, mô tả lỗi và hình ảnh màn hình nếu có.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="related">
+    <div class="related-label">Bài viết liên quan</div>
+    <a href="#install"><span>Cài đặt App VNDriver</span><span>›</span></a>
+    <a href="#permission"><span>Cấp quyền ứng dụng</span><span>›</span></a>
+    <a href="#login"><span>Đăng nhập & đăng xuất</span><span>›</span></a>
+    <a href="#troubleshoot"><span>Xử lý lỗi thường gặp</span><span>›</span></a>
+  </div>
+
+  <div class="footer">VNDriver Help Center · Chuẩn hóa HDSD Driver · ALI 2026</div>
+</body>
+</html>

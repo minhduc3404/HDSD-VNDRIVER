@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VNDriver Design System — Mobile Help Center</title>
+<style>
+  :root{
+    --brand-950:#10223F;
+    --brand-900:#162B4C;
+    --brand-800:#1D3761;
+    --brand-700:#244675;
+    --brand-600:#2B5C9A;
+    --primary-700:#1D4ED8;
+    --primary-600:#2563EB;
+    --primary-500:#3B82F6;
+    --primary-050:#EFF6FF;
+    --success-700:#047857;
+    --success-600:#059669;
+    --success-050:#ECFDF5;
+    --warning-700:#B45309;
+    --warning-600:#D97706;
+    --warning-050:#FFFBEB;
+    --danger-700:#B91C1C;
+    --danger-600:#DC2626;
+    --danger-050:#FEF2F2;
+    --info-700:#0369A1;
+    --info-050:#F0F9FF;
+    --gray-950:#0F172A;
+    --gray-900:#111827;
+    --gray-800:#1F2937;
+    --gray-700:#374151;
+    --gray-600:#4B5563;
+    --gray-500:#6B7280;
+    --gray-400:#9CA3AF;
+    --gray-300:#D1D5DB;
+    --gray-200:#E5E7EB;
+    --gray-100:#F3F4F6;
+    --gray-050:#F9FAFB;
+    --white:#FFFFFF;
+
+    --font-sans:Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+    --radius-xs:6px;
+    --radius-sm:8px;
+    --radius-md:12px;
+    --radius-lg:16px;
+    --radius-xl:20px;
+    --radius-2xl:28px;
+
+    --space-1:4px;
+    --space-2:8px;
+    --space-3:12px;
+    --space-4:16px;
+    --space-5:20px;
+    --space-6:24px;
+    --space-8:32px;
+    --space-10:40px;
+    --space-12:48px;
+
+    --shadow-xs:0 1px 2px rgba(15,23,42,.05);
+    --shadow-sm:0 2px 8px rgba(15,23,42,.06);
+    --shadow-md:0 10px 30px rgba(15,23,42,.08);
+    --border:1px solid var(--gray-200);
+    --container:1180px;
+  }
+
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family:var(--font-sans);
+    background:linear-gradient(180deg,#F8FAFC 0%,#FFFFFF 42%,#F8FAFC 100%);
+    color:var(--gray-900);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;text-decoration:none}
+  code,pre{font-family:"SFMono-Regular",Consolas,"Liberation Mono",monospace}
+  .page{min-height:100vh}
+  .shell{width:min(var(--container),calc(100% - 40px));margin:0 auto}
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    background:rgba(255,255,255,.86);
+    border-bottom:var(--border);
+    backdrop-filter:blur(16px);
+  }
+  .topbar-inner{height:68px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--brand-950)}
+  .brand-mark{width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,var(--brand-900),var(--primary-600));display:grid;place-items:center;color:#fff;font-weight:900;box-shadow:var(--shadow-xs)}
+  .nav{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  .nav a{font-size:13px;font-weight:700;color:var(--gray-600);padding:8px 10px;border-radius:999px}
+  .nav a:hover{background:var(--gray-100);color:var(--gray-900)}
+
+  .hero{padding:56px 0 32px}
+  .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}
+  .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:var(--border);border-radius:999px;background:#fff;color:var(--brand-800);font-size:12px;font-weight:800;letter-spacing:.02em;text-transform:uppercase;box-shadow:var(--shadow-xs)}
+  h1{font-size:clamp(36px,5vw,64px);line-height:1.02;margin:18px 0 16px;letter-spacing:-.04em;color:var(--brand-950)}
+  .hero p{font-size:18px;color:var(--gray-600);max-width:700px;margin:0}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+
+  .btn{border:none;border-radius:999px;padding:12px 18px;font-weight:800;font-size:14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:.18s ease;min-height:44px}
+  .btn-primary{background:var(--brand-900);color:#fff;box-shadow:var(--shadow-sm)}
+  .btn-primary:hover{transform:translateY(-1px);background:var(--brand-800)}
+  .btn-secondary{background:#fff;color:var(--brand-900);border:var(--border)}
+  .btn-secondary:hover{background:var(--gray-050)}
+  .btn-ghost{background:transparent;color:var(--gray-700)}
+  .btn-danger{background:var(--danger-600);color:#fff}
+  .btn-block{width:100%}
+  .btn-sm{min-height:36px;padding:8px 12px;font-size:13px}
+
+  .phone-stage{display:flex;justify-content:center;align-items:center;min-height:560px}
+  .phone{
+    width:310px;max-width:100%;height:640px;border-radius:42px;background:#111827;padding:10px;
+    box-shadow:0 28px 70px rgba(15,23,42,.18);
+  }
+  .phone-screen{height:100%;border-radius:34px;background:var(--gray-050);overflow:hidden;position:relative;border:1px solid rgba(255,255,255,.12)}
+  .statusbar{height:34px;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-size:11px;font-weight:800;color:var(--gray-900)}
+  .appbar{background:var(--brand-900);color:#fff;padding:14px 16px;display:flex;align-items:center;justify-content:space-between}
+  .appbar-title{font-weight:850;font-size:15px}.icon-btn{width:34px;height:34px;border-radius:12px;border:none;background:rgba(255,255,255,.12);color:inherit;display:grid;place-items:center}
+  .mobile-content{padding:14px;display:flex;flex-direction:column;gap:12px}
+
+  .section{padding:44px 0;border-top:1px solid rgba(229,231,235,.8)}
+  .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:22px}
+  .section-title{margin:0;font-size:28px;line-height:1.15;letter-spacing:-.025em;color:var(--brand-950)}
+  .section-desc{margin:8px 0 0;color:var(--gray-600);max-width:760px}
+  .badge{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:5px 9px;font-size:12px;font-weight:800;border:1px solid transparent;white-space:nowrap}
+  .badge-primary{background:var(--primary-050);color:var(--primary-700)}
+  .badge-success{background:var(--success-050);color:var(--success-700)}
+  .badge-warning{background:var(--warning-050);color:var(--warning-700)}
+  .badge-danger{background:var(--danger-050);color:var(--danger-700)}
+  .badge-neutral{background:var(--gray-100);color:var(--gray-700);border-color:var(--gray-200)}
+
+  .grid{display:grid;gap:16px}.grid-2{grid-template-columns:repeat(2,minmax(0,1fr))}.grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}.grid-4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .card{background:#fff;border:var(--border);border-radius:var(--radius-lg);box-shadow:var(--shadow-xs);padding:18px}
+  .card h3{margin:0 0 8px;font-size:17px;color:var(--brand-950);letter-spacing:-.01em}
+  .card p{margin:0;color:var(--gray-600);font-size:14px}
+  .component-card{padding:0;overflow:hidden}.component-preview{padding:18px;background:#fff;min-height:120px;display:flex;align-items:center;justify-content:center}.component-code{border-top:var(--border);background:#0F172A;color:#E5E7EB;padding:13px 15px;font-size:12px;overflow:auto}
+
+  .token-swatch{border-radius:14px;border:var(--border);overflow:hidden;background:#fff}.swatch-color{height:74px}.swatch-info{padding:12px}.swatch-name{font-weight:850;font-size:13px}.swatch-value{font-size:12px;color:var(--gray-500);margin-top:2px}
+  .type-row{display:grid;grid-template-columns:180px 1fr;gap:18px;align-items:baseline;padding:18px 0;border-bottom:var(--border)}
+  .type-meta{font-size:13px;color:var(--gray-500)}
+  .display-xl{font-size:44px;line-height:1.06;letter-spacing:-.04em;font-weight:850;color:var(--brand-950)}
+  .heading-lg{font-size:30px;line-height:1.15;font-weight:850;letter-spacing:-.03em}.heading-md{font-size:22px;line-height:1.2;font-weight:800}.body-lg{font-size:17px;color:var(--gray-700)}.body-sm{font-size:13px;color:var(--gray-600)}
+
+  .tabs{display:flex;gap:6px;padding:4px;background:var(--gray-100);border-radius:999px}.tab{flex:1;padding:10px 14px;border-radius:999px;border:0;background:transparent;color:var(--gray-600);font-weight:800;font-size:13px}.tab.active{background:#fff;color:var(--brand-950);box-shadow:var(--shadow-xs)}
+  .input{width:100%;min-height:46px;border:1px solid var(--gray-300);border-radius:14px;padding:0 14px;font:inherit;font-size:14px;background:#fff;color:var(--gray-900);outline:none}.input:focus{border-color:var(--primary-500);box-shadow:0 0 0 3px rgba(37,99,235,.10)}
+  .field{display:grid;gap:7px}.label{font-size:13px;font-weight:800;color:var(--gray-700)}.help{font-size:12px;color:var(--gray-500)}
+  .select-row{display:flex;align-items:center;justify-content:space-between;padding:13px 14px;border:var(--border);border-radius:14px;background:#fff}.toggle{width:46px;height:28px;border-radius:999px;background:var(--gray-300);padding:3px;display:flex;align-items:center}.toggle::after{content:"";width:22px;height:22px;background:#fff;border-radius:999px;box-shadow:var(--shadow-xs)}.toggle.on{background:var(--success-600);justify-content:flex-end}
+
+  .alert{display:flex;gap:11px;border-radius:16px;padding:13px 14px;border:1px solid transparent;font-size:14px}.alert strong{display:block;margin-bottom:1px}.alert-info{background:var(--info-050);border-color:#BAE6FD;color:var(--info-700)}.alert-warning{background:var(--warning-050);border-color:#FDE68A;color:var(--warning-700)}.alert-danger{background:var(--danger-050);border-color:#FECACA;color:var(--danger-700)}.alert-success{background:var(--success-050);border-color:#A7F3D0;color:var(--success-700)}
+  .step-card{display:grid;grid-template-columns:34px 1fr;gap:12px;padding:15px;border:var(--border);background:#fff;border-radius:18px}.step-num{width:34px;height:34px;border-radius:12px;background:var(--brand-900);color:#fff;display:grid;place-items:center;font-weight:900}.step-title{font-weight:850;color:var(--gray-900)}.step-text{font-size:13px;color:var(--gray-600);margin-top:3px}
+  .article-card{display:flex;gap:12px;align-items:flex-start;padding:15px;border:var(--border);border-radius:18px;background:#fff}.article-icon{width:40px;height:40px;border-radius:14px;background:var(--primary-050);display:grid;place-items:center;color:var(--primary-700);font-weight:900;flex:0 0 auto}.article-card h4{margin:0 0 4px;font-size:15px}.article-card p{margin:0;color:var(--gray-600);font-size:13px}
+  .faq-item{border:var(--border);border-radius:16px;background:#fff;overflow:hidden}.faq-q{padding:14px 16px;font-weight:850;display:flex;justify-content:space-between;gap:12px}.faq-a{padding:0 16px 15px;color:var(--gray-600);font-size:14px}
+  .toast{display:flex;align-items:center;gap:10px;background:#111827;color:#fff;border-radius:16px;padding:12px 14px;box-shadow:var(--shadow-md);font-size:14px}.toast .dot{width:9px;height:9px;border-radius:999px;background:var(--success-600)}
+  .bottom-sheet{border:var(--border);border-radius:24px 24px 18px 18px;background:#fff;padding:10px 16px 16px;box-shadow:var(--shadow-sm)}.grabber{width:42px;height:4px;background:var(--gray-300);border-radius:999px;margin:0 auto 14px}.sheet-title{font-size:17px;font-weight:850;margin-bottom:6px}.sheet-text{font-size:13px;color:var(--gray-600);margin-bottom:14px}
+  .empty-state{text-align:center;padding:26px 16px;border:1px dashed var(--gray-300);border-radius:18px;background:var(--gray-050)}.empty-icon{width:52px;height:52px;border-radius:18px;background:#fff;border:var(--border);display:grid;place-items:center;margin:0 auto 12px;font-size:22px}.empty-state h4{margin:0 0 5px}.empty-state p{margin:0;color:var(--gray-600);font-size:13px}
+  .progress{height:8px;border-radius:999px;background:var(--gray-100);overflow:hidden}.progress span{display:block;height:100%;background:var(--primary-600);border-radius:999px}
+  .list{display:grid;gap:8px}.list-item{display:flex;align-items:center;gap:12px;padding:12px;border:var(--border);border-radius:16px;background:#fff}.avatar{width:38px;height:38px;border-radius:14px;background:linear-gradient(135deg,var(--brand-800),var(--primary-500));color:#fff;display:grid;place-items:center;font-weight:900}.list-main{flex:1;min-width:0}.list-title{font-weight:850;font-size:14px}.list-sub{font-size:12px;color:var(--gray-500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+  .driver-status{display:flex;align-items:center;justify-content:space-between;background:#fff;border:var(--border);border-radius:18px;padding:14px}.status-left{display:flex;align-items:center;gap:11px}.pulse{width:12px;height:12px;border-radius:50%;background:var(--success-600);box-shadow:0 0 0 5px rgba(5,150,105,.12)}.status-title{font-weight:850}.status-sub{font-size:12px;color:var(--gray-500)}
+  .trip-card{background:#fff;border:var(--border);border-radius:20px;padding:15px;box-shadow:var(--shadow-xs)}.trip-head{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}.trip-id{font-weight:900;color:var(--brand-950)}.trip-price{font-weight:900;color:var(--success-700)}.route{display:grid;gap:10px;margin:10px 0}.route-row{display:grid;grid-template-columns:18px 1fr;gap:9px;align-items:start}.pin{width:12px;height:12px;border-radius:50%;margin-top:4px;background:var(--primary-600)}.pin.end{background:var(--danger-600)}.route-text{font-size:13px;color:var(--gray-700)}
+  .permission-card{background:#fff;border:var(--border);border-radius:18px;padding:14px;display:flex;gap:12px;align-items:flex-start}.permission-icon{width:40px;height:40px;border-radius:14px;background:var(--warning-050);color:var(--warning-700);display:grid;place-items:center;font-weight:900}.permission-title{font-weight:850}.permission-text{font-size:13px;color:var(--gray-600)}
+
+  .do-dont{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rule{border-radius:18px;border:var(--border);background:#fff;padding:16px}.rule h3{margin:0 0 10px;font-size:16px}.rule ul{margin:0;padding-left:20px;color:var(--gray-700);font-size:14px}.rule li+li{margin-top:7px}
+  .spec-table{width:100%;border-collapse:separate;border-spacing:0;overflow:hidden;border:var(--border);border-radius:18px;background:#fff}.spec-table th,.spec-table td{padding:13px 14px;border-bottom:var(--border);font-size:14px;text-align:left}.spec-table th{background:var(--gray-050);color:var(--gray-700);font-size:12px;text-transform:uppercase;letter-spacing:.04em}.spec-table tr:last-child td{border-bottom:0}.spec-table td:nth-child(1){font-weight:850;color:var(--brand-950)}
+
+  .footer{padding:36px 0 48px;color:var(--gray-500);font-size:13px;border-top:var(--border)}
+
+  @media(max-width:920px){.hero-grid{grid-template-columns:1fr}.phone-stage{min-height:auto}.grid-4{grid-template-columns:repeat(2,1fr)}.grid-3{grid-template-columns:repeat(2,1fr)}.section-head{display:block}.nav{display:none}}
+  @media(max-width:640px){.shell{width:min(100% - 28px,var(--container))}.hero{padding:36px 0 24px}.grid-2,.grid-3,.grid-4,.do-dont{grid-template-columns:1fr}.type-row{grid-template-columns:1fr;gap:6px}.phone{width:290px;height:600px}.section{padding:34px 0}.hero-actions .btn{width:100%}}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#top" aria-label="VNDriver Design System">
+        <span class="brand-mark">VD</span>
+        <span>VNDriver DS</span>
+      </a>
+      <nav class="nav" aria-label="Điều hướng">
+        <a href="#tokens">Tokens</a>
+        <a href="#components">Components</a>
+        <a href="#mobile">Mobile UI</a>
+        <a href="#content">Help Center</a>
+        <a href="#rules">Guidelines</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <span class="eyebrow">VNDriver Mobile Help Center · v1.0</span>
+          <h1>Design System chuyên nghiệp cho App & HDSD tài xế</h1>
+          <p>Bộ chuẩn giao diện ưu tiên mobile-first, ít shadow, nền sạch, component rõ ràng, phù hợp tài liệu hướng dẫn sử dụng, FAQ, troubleshooting và màn hình app tài xế.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#components">Xem components</a>
+            <a class="btn btn-secondary" href="#mobile">Xem mobile mẫu</a>
+          </div>
+        </div>
+        <div class="phone-stage" aria-label="Mobile preview">
+          <div class="phone">
+            <div class="phone-screen">
+              <div class="statusbar"><span>9:41</span><span>●●● 5G 🔋</span></div>
+              <div class="appbar">
+                <button class="icon-btn">☰</button>
+                <div class="appbar-title">VNDriver</div>
+                <button class="icon-btn">?</button>
+              </div>
+              <div class="mobile-content">
+                <div class="driver-status">
+                  <div class="status-left"><span class="pulse"></span><div><div class="status-title">Sẵn sàng đón khách</div><div class="status-sub">GPS tốt · Online</div></div></div>
+                  <span class="badge badge-success">Hoạt động</span>
+                </div>
+                <div class="trip-card">
+                  <div class="trip-head"><div><div class="trip-id">Cuốc #T260618</div><div class="body-sm">Taxi 4 chỗ</div></div><div class="trip-price">85.000đ</div></div>
+                  <div class="route">
+                    <div class="route-row"><span class="pin"></span><div class="route-text">Cổng trường Đại học</div></div>
+                    <div class="route-row"><span class="pin end"></span><div class="route-text">Bến xe trung tâm</div></div>
+                  </div>
+                  <button class="btn btn-primary btn-block btn-sm">Nhận chuyến</button>
+                </div>
+                <div class="permission-card">
+                  <div class="permission-icon">!</div>
+                  <div><div class="permission-title">Cấp quyền vị trí</div><div class="permission-text">Chọn “Luôn cho phép” để app hoạt động ổn định.</div></div>
+                </div>
+                <div class="article-card">
+                  <div class="article-icon">1</div>
+                  <div><h4>Cài đặt App VNDriver</h4><p>Hướng dẫn tải app trên CH Play và App Store.</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tokens" class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">01. Foundation Tokens</h2>
+            <p class="section-desc">Tokens dùng chung cho website hướng dẫn, app tài xế và các trang Help Center. Tông màu xanh navy tạo cảm giác vận hành, tin cậy; accent blue dùng cho thao tác chính.</p>
+          </div>
+          <span class="badge badge-neutral">Mobile-first</span>
+        </div>
+
+        <div class="grid grid-4">
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--brand-950)"></div><div class="swatch-info"><div class="swatch-name">Brand 950</div><div class="swatch-value">#10223F</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--brand-900)"></div><div class="swatch-info"><div class="swatch-name">Brand 900</div><div class="swatch-value">#162B4C</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--primary-600)"></div><div class="swatch-info"><div class="swatch-name">Primary 600</div><div class="swatch-value">#2563EB</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--success-600)"></div><div class="swatch-info"><div class="swatch-name">Success 600</div><div class="swatch-value">#059669</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--warning-600)"></div><div class="swatch-info"><div class="swatch-name">Warning 600</div><div class="swatch-value">#D97706</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--danger-600)"></div><div class="swatch-info"><div class="swatch-name">Danger 600</div><div class="swatch-value">#DC2626</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--gray-100)"></div><div class="swatch-info"><div class="swatch-name">Gray 100</div><div class="swatch-value">#F3F4F6</div></div></div>
+          <div class="token-swatch"><div class="swatch-color" style="background:var(--gray-900)"></div><div class="swatch-info"><div class="swatch-name">Gray 900</div><div class="swatch-value">#111827</div></div></div>
+        </div>
+
+        <div class="card" style="margin-top:16px">
+          <div class="type-row"><div class="type-meta">Display XL · 44/1.06</div><div class="display-xl">Hướng dẫn sử dụng VNDriver</div></div>
+          <div class="type-row"><div class="type-meta">Heading LG · 30/1.15</div><div class="heading-lg">Cài đặt và cấp quyền App</div></div>
+          <div class="type-row"><div class="type-meta">Heading MD · 22/1.2</div><div class="heading-md">Đăng nhập tài khoản tài xế</div></div>
+          <div class="type-row"><div class="type-meta">Body LG · 17/1.55</div><div class="body-lg">Nội dung hướng dẫn cần ngắn gọn, đi thẳng vào thao tác, ưu tiên câu chủ động.</div></div>
+          <div class="type-row" style="border-bottom:0"><div class="type-meta">Body SM · 13/1.55</div><div class="body-sm">Dùng cho caption ảnh, mô tả phụ, trạng thái, ghi chú nhỏ.</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="components" class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">02. Component Library</h2>
+            <p class="section-desc">Các component nền tảng dùng cho trang HDSD, FAQ và màn hình mobile. Shadow rất nhẹ, ưu tiên border, radius và khoảng trắng.</p>
+          </div>
+          <span class="badge badge-primary">Core Components</span>
+        </div>
+
+        <div class="grid grid-3">
+          <div class="component-card card"><div class="component-preview"><button class="btn btn-primary">Tiếp tục</button></div><pre class="component-code">.btn .btn-primary</pre></div>
+          <div class="component-card card"><div class="component-preview"><button class="btn btn-secondary">Xem hướng dẫn</button></div><pre class="component-code">.btn .btn-secondary</pre></div>
+          <div class="component-card card"><div class="component-preview" style="gap:8px;flex-wrap:wrap"><span class="badge badge-success">Online</span><span class="badge badge-warning">Cần kiểm tra</span><span class="badge badge-danger">Lỗi</span></div><pre class="component-code">.badge variants</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="tabs" style="width:100%"><button class="tab active">Android</button><button class="tab">iPhone</button></div></div><pre class="component-code">.tabs .tab.active</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="field" style="width:100%"><label class="label">Số điện thoại</label><input class="input" value="0912 345 678"/><div class="help">Dùng tài khoản được công ty cấp.</div></div></div><pre class="component-code">.field .input .help</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="select-row" style="width:100%"><div><div class="list-title">Cho phép vị trí</div><div class="list-sub">Luôn cho phép</div></div><span class="toggle on"></span></div></div><pre class="component-code">.select-row .toggle.on</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="alert alert-warning"><span>⚠</span><div><strong>Lưu ý cấp quyền</strong>Chọn “Luôn cho phép” để app không mất GPS.</div></div></div><pre class="component-code">.alert .alert-warning</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="step-card"><div class="step-num">1</div><div><div class="step-title">Mở CH Play</div><div class="step-text">Tìm kiếm từ khóa “vndriver”.</div></div></div></div><pre class="component-code">.step-card</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="toast"><span class="dot"></span><span>Cập nhật trạng thái thành công</span></div></div><pre class="component-code">.toast</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="faq-item" style="width:100%"><div class="faq-q">Không nhận được cuốc? <span>⌄</span></div><div class="faq-a">Kiểm tra GPS, trạng thái online và kết nối mạng.</div></div></div><pre class="component-code">.faq-item</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="empty-state" style="width:100%"><div class="empty-icon">📍</div><h4>Chưa có chuyến</h4><p>Hệ thống sẽ thông báo khi có cuốc mới.</p></div></div><pre class="component-code">.empty-state</pre></div>
+          <div class="component-card card"><div class="component-preview"><div class="bottom-sheet" style="width:100%"><div class="grabber"></div><div class="sheet-title">Xác nhận đăng xuất</div><div class="sheet-text">Bạn có chắc muốn đăng xuất khỏi VNDriver?</div><button class="btn btn-primary btn-block btn-sm">Đồng ý</button></div></div><pre class="component-code">.bottom-sheet</pre></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="mobile" class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">03. Mobile App Components</h2>
+            <p class="section-desc">Các block giao diện đặc thù cho tài xế: trạng thái online, thẻ cuốc xe, quyền ứng dụng, danh sách bài hướng dẫn và progress.</p>
+          </div>
+          <span class="badge badge-success">Driver App</span>
+        </div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Driver Status</h3>
+            <p>Hiển thị trạng thái hoạt động, GPS và badge online/offline.</p>
+            <div style="height:14px"></div>
+            <div class="driver-status"><div class="status-left"><span class="pulse"></span><div><div class="status-title">Sẵn sàng đón khách</div><div class="status-sub">GPS tốt · Kết nối ổn định</div></div></div><span class="badge badge-success">Online</span></div>
+          </div>
+          <div class="card">
+            <h3>Trip Request Card</h3>
+            <p>Thẻ nhận chuyến rõ ràng, giá cước nổi bật, tuyến đường dễ đọc.</p>
+            <div style="height:14px"></div>
+            <div class="trip-card"><div class="trip-head"><div><div class="trip-id">Cuốc #T2606181024</div><div class="body-sm">Khách đặt app · 2.4 km</div></div><div class="trip-price">120.000đ</div></div><div class="route"><div class="route-row"><span class="pin"></span><div class="route-text">123 Nguyễn Trãi, Quận 1</div></div><div class="route-row"><span class="pin end"></span><div class="route-text">Sân bay Tân Sơn Nhất</div></div></div><button class="btn btn-primary btn-block btn-sm">Nhận chuyến</button></div>
+          </div>
+          <div class="card">
+            <h3>Permission Checklist</h3>
+            <p>Dùng trong bài cấp quyền và troubleshooting.</p>
+            <div style="height:14px"></div>
+            <div class="list">
+              <div class="list-item"><div class="avatar">📍</div><div class="list-main"><div class="list-title">Vị trí</div><div class="list-sub">Luôn cho phép</div></div><span class="badge badge-success">OK</span></div>
+              <div class="list-item"><div class="avatar">🔋</div><div class="list-main"><div class="list-title">Pin</div><div class="list-sub">Không giới hạn</div></div><span class="badge badge-warning">Kiểm tra</span></div>
+              <div class="list-item"><div class="avatar">📶</div><div class="list-main"><div class="list-title">Dữ liệu nền</div><div class="list-sub">Cho phép hoạt động nền</div></div><span class="badge badge-success">OK</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Learning Progress</h3>
+            <p>Dùng cho HDSD theo nhiều bước hoặc onboarding.</p>
+            <div style="height:14px"></div>
+            <div class="list-title">Hoàn thành hướng dẫn cài đặt</div>
+            <div class="body-sm" style="margin:4px 0 10px">3/5 bước</div>
+            <div class="progress"><span style="width:60%"></span></div>
+            <div style="height:14px"></div>
+            <button class="btn btn-secondary btn-block btn-sm">Tiếp tục đọc</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="content" class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">04. Help Center Components</h2>
+            <p class="section-desc">Bộ component dành riêng cho tài liệu HDSD: article card, step-by-step, cảnh báo, FAQ, related articles.</p>
+          </div>
+          <span class="badge badge-primary">Documentation</span>
+        </div>
+        <div class="grid grid-3">
+          <div class="article-card"><div class="article-icon">A</div><div><h4>Cài đặt App VNDriver</h4><p>Hướng dẫn tải app trên Android và iPhone.</p></div></div>
+          <div class="article-card"><div class="article-icon">B</div><div><h4>Đăng nhập / Đăng xuất</h4><p>Thao tác tài khoản cơ bản cho tài xế.</p></div></div>
+          <div class="article-card"><div class="article-icon">C</div><div><h4>Cấp quyền ứng dụng</h4><p>Kiểm tra GPS, chạy nền và tối ưu pin.</p></div></div>
+        </div>
+        <div style="height:16px"></div>
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Article Step Pattern</h3>
+            <div class="grid" style="margin-top:14px">
+              <div class="step-card"><div class="step-num">1</div><div><div class="step-title">Mở cửa hàng ứng dụng</div><div class="step-text">Android mở CH Play, iPhone mở App Store.</div></div></div>
+              <div class="step-card"><div class="step-num">2</div><div><div class="step-title">Tìm “vndriver”</div><div class="step-text">Chọn đúng ứng dụng VNDriver.</div></div></div>
+              <div class="step-card"><div class="step-num">3</div><div><div class="step-title">Cấp quyền</div><div class="step-text">Cho phép vị trí và chạy nền.</div></div></div>
+            </div>
+          </div>
+          <div class="card">
+            <h3>FAQ Pattern</h3>
+            <div class="grid" style="margin-top:14px">
+              <div class="faq-item"><div class="faq-q">App báo đăng nhập ở thiết bị khác <span>⌄</span></div><div class="faq-a">Đăng xuất thiết bị cũ hoặc liên hệ tổng đài để reset phiên đăng nhập.</div></div>
+              <div class="faq-item"><div class="faq-q">Không nhận được cuốc xe <span>⌄</span></div><div class="faq-a">Kiểm tra trạng thái online, quyền vị trí, mạng và pin.</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="rules" class="section">
+      <div class="shell">
+        <div class="section-head">
+          <div>
+            <h2 class="section-title">05. Usage Guidelines</h2>
+            <p class="section-desc">Quy tắc để giữ giao diện chuyên nghiệp, đồng nhất và dễ mở rộng sang các màn hình app mobile.</p>
+          </div>
+          <span class="badge badge-neutral">Rules</span>
+        </div>
+        <div class="do-dont">
+          <div class="rule">
+            <h3>Do</h3>
+            <ul>
+              <li>Dùng border + nền trắng thay vì shadow nặng.</li>
+              <li>Giữ touch target tối thiểu 44px trên mobile.</li>
+              <li>Mỗi bước hướng dẫn chỉ nên có một hành động chính.</li>
+              <li>Dùng badge để phân biệt trạng thái: Online, Cần kiểm tra, Lỗi.</li>
+              <li>Ảnh minh họa nên có caption ngắn và crop đúng vùng thao tác.</li>
+            </ul>
+          </div>
+          <div class="rule">
+            <h3>Don’t</h3>
+            <ul>
+              <li>Không dùng quá nhiều màu trong cùng một màn hình.</li>
+              <li>Không dùng shadow đậm cho card thường.</li>
+              <li>Không viết hướng dẫn dài hơn 2 dòng cho một bước.</li>
+              <li>Không để ảnh full màn hình nếu chỉ cần chỉ rõ một nút.</li>
+              <li>Không trộn nhiều kiểu button primary trên cùng page.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+        <table class="spec-table">
+          <thead><tr><th>Hạng mục</th><th>Chuẩn đề xuất</th><th>Ghi chú</th></tr></thead>
+          <tbody>
+            <tr><td>Shadow</td><td>XS/SM cho card, MD chỉ dùng cho overlay</td><td>Tránh hiệu ứng nổi quá mạnh</td></tr>
+            <tr><td>Radius</td><td>12–20px cho component, 28px cho container lớn</td><td>Phù hợp mobile hiện đại</td></tr>
+            <tr><td>Spacing</td><td>8px grid, section 32–48px</td><td>Dễ scale giữa web và app</td></tr>
+            <tr><td>Button</td><td>44px minimum height</td><td>Đảm bảo thao tác bằng ngón tay</td></tr>
+            <tr><td>Typography</td><td>Inter/System font, body 14–17px</td><td>Dễ đọc trên Android/iOS</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="shell">VNDriver Design System · Mobile Help Center · Generated for chuẩn hóa HDSD Driver</div>
+  </footer>
+</div>
+</body>
+</html>

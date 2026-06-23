@@ -1,0 +1,52 @@
+site_name: HDSD VNDriver
+site_description: Hướng dẫn sử dụng App VNDriver cho tài xế
+site_url: https://your-domain.com
+
+theme:
+  name: material
+  language: vi
+  logo: https://static.ali.vn/cache/images/1/1/29baed73a8e85e2943952e95e4fb13cf-300x0.png
+  favicon: https://static.ali.vn/cache/images/1/1/29baed73a8e85e2943952e95e4fb13cf-300x0.png
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.top
+    - search.suggest
+    - search.highlight
+    - content.code.copy
+    - content.tabs.link
+  palette:
+    - scheme: default
+      primary: custom
+      accent: custom
+
+copyright: Copyright &copy; 2026, All Right Reserved ALI CORP
+
+extra:
+  generator: false
+
+extra_css:
+  - assets/stylesheets/extra.css
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+
+nav:
+  - Trang chủ: index.md
+  - Hướng dẫn:
+    - Cài đặt App: install.md
+    - Đăng nhập: login.md
+    - Nhận chuyến: trip.md
+    - Xếp hàng chờ: queue.md
+    - Trạng thái: status.md
+    - Hồ sơ: profile.md
+    - Ví & Thanh toán: wallet.md
+  - FAQ & Lỗi:
+    - Câu hỏi thường gặp: faq/index.md
+    - Xử lý lỗi: faq/troubleshooting.md

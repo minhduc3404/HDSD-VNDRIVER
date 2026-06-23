@@ -1,0 +1,7 @@
+site/
+__pycache__/
+.DS_Store
+.git/
+original documents/
+output/
+*.docx
