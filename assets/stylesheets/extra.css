@@ -1,0 +1,46 @@
+/* Custom primary color: #43914F */
+[data-md-color-scheme="default"] {
+  --md-primary-fg-color:        #43914F;
+  --md-primary-fg-color--light: #5FB86C;
+  --md-primary-fg-color--dark:  #2E6A37;
+  --md-accent-fg-color:         #43914F;
+  --md-accent-fg-color--light:  #5FB86C;
+}
+
+/* Làm heading nổi bật hơn */
+.md-typeset h1 {
+  font-weight: 800 !important;
+  color: #43914F;
+}
+
+.md-typeset h2 {
+  font-weight: 700 !important;
+  color: #1a1a2e;
+}
+
+.md-typeset h3 {
+  font-weight: 600 !important;
+  color: #1a1a2e;
+}
+
+/* Logo - nền trắng, bo góc, padding */
+.md-header__button.md-logo {
+  background-color: #fff;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+.md-header__button.md-logo img {
+  border-radius: 2px;
+}
+
+/* Footer - nền primary color */
+.md-footer-meta {
+  background-color: #43914F;
+}
+
+/* Canh giữa copyright text */
+.md-footer-meta .md-copyright {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+}
