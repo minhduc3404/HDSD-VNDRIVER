@@ -10,6 +10,7 @@ Chào mừng đến với trang hướng dẫn sử dụng App **VNDriver** dàn
 
 ## Các tính năng chính
 
+-   [Kết nối & sử dụng SKYBOX M2 / Box](skysoft-meter.md) — Hướng dẫn kết nối SKYBOX M2/Box, nhập OTP và theo dõi chuyến đi
 -   [Xếp hàng chờ](queue.md) — Bật/tắt chế độ chờ nhận chuyến
 -   [Trạng thái hoạt động](status.md) — Chuyển đổi Online/Offline
 -   [Hồ sơ cá nhân](profile.md) — Xem và chỉnh sửa thông tin cá nhân

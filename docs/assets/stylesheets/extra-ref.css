@@ -1,10 +1,10 @@
 /* ═══════════════════════════════════════════════════════════════
    extra-ref.css — Optional Refined Style for HDSD VNDriver (MkDocs Material)
-   
+
    CÁCH DÙNG:
      Apply:  Bỏ comment dòng " - assets/stylesheets/extra-ref.css" trong mkdocs.yml
      Gỡ bỏ:  Comment lại dòng đó trong mkdocs.yml → reload
-   
+
    ⚠ Chỉ thay đổi style (màu sắc, font, border, shadow, spacing).
    ⚠ Không thay đổi bố cục layout, cấu trúc HTML, hay số thứ tự step.
    ═══════════════════════════════════════════════════════════════ */

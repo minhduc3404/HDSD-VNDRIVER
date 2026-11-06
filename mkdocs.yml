@@ -1,6 +1,6 @@
 site_name: HDSD VNDriver
 site_description: Hướng dẫn sử dụng App VNDriver cho tài xế
-site_url: https://your-domain.com
+site_url: https://minhduc3404.github.io/HDSD-VNDRIVER/
 
 theme:
   name: material
@@ -46,6 +46,7 @@ nav:
   - Hướng dẫn:
     - Cài đặt App: install.md
     - Đăng nhập: login.md
+    - Kết nối đồng hồ SKYBOX M2: skysoft-meter.md
     - Nhận chuyến: trip.md
     - Xếp hàng chờ: queue.md
     - Trạng thái: status.md
